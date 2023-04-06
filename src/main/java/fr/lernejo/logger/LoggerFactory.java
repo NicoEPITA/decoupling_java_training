@@ -1,9 +1,8 @@
 package fr.lernejo.logger;
 
 public class LoggerFactory {
-    public static Logger getLogger(String name) {
-        String pathAsString = name + ".log";
-        return new ContextualLogger(name, new FileLogger(pathAsString));
+    public static FileLogger getLogger(String name){
+        return new FileLogger("/tmp/" + name);
     }
 }
 
