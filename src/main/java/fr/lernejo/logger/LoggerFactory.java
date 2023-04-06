@@ -1,11 +1,15 @@
 package fr.lernejo.logger;
 
 public class LoggerFactory {
-    public static FileLogger getLogger(String name){
-        return new FileLogger("/tmp/" + name);
+    public static Logger getLogger(String name){
+        return new Logger() {
+            @Override
+            public void log(String message) {
+                System.out.println(message);
+            }
+        };
     }
 }
-
 
 
 
