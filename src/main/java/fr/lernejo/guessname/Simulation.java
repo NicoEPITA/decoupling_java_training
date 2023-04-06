@@ -2,6 +2,7 @@ package fr.lernejo.guessname;
 import fr.lernejo.logger.Logger;
 import fr.lernejo.logger.LoggerFactory;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Simulation {
 
@@ -38,10 +39,23 @@ public class Simulation {
         return false;
     }
 
-    public void loopUntilPlayerSucceed() {
+    public void loopUntilPlayerSucceed(int maxTry) {
         boolean success = false;
-        while (!success) {
+        long startTime = System.currentTimeMillis();
+        while (!success && maxTry > 0) {
             success = nextRound();
+            maxTry--;
+        }
+        long endTime = System.currentTimeMillis();
+        long durationMillis = endTime - startTime;
+        String timeStr = String.format("%02d:%02d.%03d",
+            TimeUnit.MILLISECONDS.toMinutes(durationMillis),
+            TimeUnit.MILLISECONDS.toSeconds(durationMillis) % 60,
+            durationMillis % 1000);
+        if (success) {
+            System.out.println("Félicitations ! Vous avez trouvé la solution en " + timeStr);
+        } else {
+            System.out.println("Désolé, vous n'avez pas trouvé la solution en " + timeStr);
         }
     }
 }
